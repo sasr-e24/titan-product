@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TITAN — One Platform. Endless Missions.</title>
+<meta name="description" content="One platform. Endless missions. TITAN is a mission-configurable autonomous heavy-lift platform carrying up to 132 lb at up to 20,000 ft, ready to fly in under two minutes." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── tokens ─────────────────────────────────────────────── */
+:root{
+  --bg:#07090c; --bg-2:#0c0f14; --bg-3:#111620;
+  --line:rgba(255,255,255,.10); --line-soft:rgba(255,255,255,.055);
+  --fg:#eef1f5; --fg-2:#9aa4b2; --fg-3:#5f6a7a;
+  --accent:#ff6b1f;                 /* swap this one value to re-brand */
+  --accent-soft:rgba(255,107,31,.14);
+  --max:1220px; --pad:clamp(20px,5vw,64px);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+
+/* ── typography ─────────────────────────────────────────── */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--fg-3);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);flex:none}
+h1,h2,h3{font-weight:600;letter-spacing:-.025em;line-height:1.05}
+h1{font-size:clamp(38px,6.6vw,80px);letter-spacing:-.035em}
+h2{font-size:clamp(28px,4.2vw,50px)}
+.lede{font-size:clamp(15px,1.55vw,19px);color:var(--fg-2);font-weight:300;max-width:62ch}
+.sec{padding-block:clamp(72px,10vh,124px)}
+.band{border-bottom:1px solid var(--line-soft);background:var(--bg);position:relative;overflow:hidden}
+.band::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(900px,110%);aspect-ratio:2.2;border-radius:50%;
+  background:radial-gradient(ellipse,var(--accent-soft) 0%,transparent 64%);filter:blur(30px);pointer-events:none}
+.band .wrap{position:relative;z-index:1;padding-block:clamp(64px,9vh,104px)}
+.band p{font-size:clamp(21px,2.9vw,36px);font-weight:300;line-height:1.28;letter-spacing:-.02em;
+  max-width:24ch;color:var(--fg-2)}
+.band p b{font-weight:600;color:var(--fg);display:block;margin-top:.5em}
+.band p b em{font-style:normal;color:var(--accent)}
+.sec-head{max-width:68ch}
+.sec-head h2{margin-top:18px}
+.sec-head .lede{margin-top:18px}
+section{position:relative}
+
+/* ── header ─────────────────────────────────────────────── */
+header{position:fixed;inset:0 0 auto 0;z-index:100;backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);background:rgba(7,9,12,0);
+  border-bottom:1px solid transparent;transition:background .35s,border-color .35s}
+header.solid{background:rgba(7,9,12,.86);border-bottom-color:var(--line-soft)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.mark{display:flex;align-items:center;gap:10px}
+.mark svg{width:22px;height:22px;color:var(--accent)}
+.mark span{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--fg-2);white-space:nowrap}
+nav{display:flex;align-items:center;gap:28px}
+nav a{font-size:13px;color:var(--fg-2);position:relative;padding:4px 0;transition:color .2s}
+nav a::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .25s}
+nav a:hover{color:var(--fg)} nav a:hover::after{width:100%}
+.nav-cta{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--line);padding:9px 16px;color:var(--fg);transition:.25s}
+.nav-cta:hover{border-color:var(--accent);background:var(--accent-soft)}
+.nav-cta::after{display:none}
+@media(max-width:900px){nav .hide-sm{display:none}}
+
+/* ── hero ───────────────────────────────────────────────── */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  padding-bottom:clamp(48px,8vh,92px);overflow:hidden}
+.hero-video{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-video video,.hero-video img.bgstill{width:100%;height:100%;object-fit:cover;
+  filter:saturate(.45) contrast(1.14) brightness(.62)}
+.hero-video::after{content:'';position:absolute;inset:0;background:
+  linear-gradient(to bottom,rgba(7,9,12,.88) 0%,rgba(7,9,12,.3) 22%,rgba(7,9,12,.06) 44%,rgba(7,9,12,.7) 100%),
+  linear-gradient(to right,rgba(7,9,12,.66) 0%,rgba(7,9,12,.2) 46%,transparent 74%)}
+.grid-bg{position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:linear-gradient(to right,var(--line-soft) 1px,transparent 1px),
+                   linear-gradient(to bottom,var(--line-soft) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 40%,#000 20%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 40%,#000 20%,transparent 80%)}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero h1{max-width:15ch;margin-top:24px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{margin-top:22px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.12em;text-transform:uppercase;padding:14px 22px;border:1px solid var(--line);transition:.25s}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#0b0b0b;font-weight:500}
+.btn-primary:hover{filter:brightness(1.12)}
+.btn-ghost:hover{border-color:var(--accent);background:var(--accent-soft)}
+.scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--fg-3)}
+
+/* ── stat strip ─────────────────────────────────────────── */
+.strip{border-block:1px solid var(--line-soft);background:var(--bg-2)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft);padding-inline:0}
+.strip-item{background:var(--bg-2);padding:26px var(--pad)}
+.strip-item .k{font-family:var(--mono);font-size:clamp(22px,3vw,32px);font-variant-numeric:tabular-nums}
+.strip-item .k small{font-size:.5em;color:var(--fg-2)}
+.strip-item .v{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fg-3);margin-top:6px}
+@media(max-width:760px){.strip .wrap{grid-template-columns:repeat(2,1fr)}}
+
+/* ── capability cards ───────────────────────────────────── */
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);
+  border:1px solid var(--line-soft);margin-top:52px}
+.cap{background:var(--bg);padding:32px 30px;transition:background .35s}
+.cap:hover{background:var(--bg-3)}
+.cap .ic{width:26px;height:26px;color:var(--accent);margin-bottom:20px}
+.cap h4{font-size:16px;font-weight:600}
+.cap p{font-size:14px;color:var(--fg-2);margin-top:10px;font-weight:300}
+.cap .fig{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent);
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+@media(max-width:940px){.caps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.caps{grid-template-columns:1fr}}
+
+/* ── payload configurator ───────────────────────────────── */
+.cfg{display:grid;grid-template-columns:1.25fr 1fr;gap:1px;background:var(--line-soft);
+  border:1px solid var(--line-soft);margin-top:52px}
+.cfg-stage{background:var(--bg-2);position:relative;min-height:480px;display:flex;
+  align-items:center;justify-content:center;padding:40px;overflow:hidden}
+.cfg-stage::before{content:'';position:absolute;inset:0;opacity:.55;
+  background-image:linear-gradient(to right,var(--line-soft) 1px,transparent 1px),
+                   linear-gradient(to bottom,var(--line-soft) 1px,transparent 1px);
+  background-size:44px 44px}
+.cfg-stage::after{content:'';position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+  width:min(560px,90%);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-soft) 0%,transparent 62%);filter:blur(14px)}
+.cfg-imgs{position:relative;z-index:1;width:100%;height:min(400px,42vw);display:grid;place-items:center}
+.cfg-stage img{grid-area:1/1;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.cfg-stage img.out{opacity:0;transform:translateY(8px) scale(.985)}
+.cfg-badge{position:absolute;left:28px;bottom:26px;z-index:2}
+.cfg-badge .lab{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3)}
+.cfg-badge .nm{font-size:clamp(19px,2.4vw,26px);font-weight:600;letter-spacing:-.02em;margin-top:6px}
+.cfg-badge .pl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--accent);margin-top:8px}
+.cfg-prog{position:absolute;inset:0 0 auto 0;height:2px;background:rgba(255,255,255,.06);z-index:3}
+.cfg-prog i{display:block;height:100%;width:0;background:var(--accent);transform-origin:left}
+.cfg-root-paused .cfg-prog{opacity:.25}
+.apps{margin-top:20px}
+.apps .ah{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+.apps ul{list-style:none;margin-top:12px;display:grid;gap:7px}
+.apps li{font-size:13.5px;color:var(--fg-2);font-weight:300;padding-left:16px;position:relative}
+.apps li::before{content:'';position:absolute;left:0;top:.66em;width:5px;height:1px;background:var(--accent)}
+.cfg-glyph{position:absolute;right:28px;bottom:26px;z-index:2;width:clamp(52px,7vw,74px);
+  height:auto;aspect-ratio:1;color:var(--accent);opacity:.9;
+  transition:opacity .3s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+.cfg-glyph.swap{opacity:0;transform:translateY(10px) scale(.94)}
+.corner{position:absolute;width:14px;height:14px;border:1px solid var(--accent);opacity:.45;z-index:2}
+.corner.tl{top:14px;left:14px;border-right:0;border-bottom:0}
+.corner.tr{top:14px;right:14px;border-left:0;border-bottom:0}
+.corner.bl{bottom:14px;left:14px;border-right:0;border-top:0}
+.corner.br{bottom:14px;right:14px;border-left:0;border-top:0}
+
+.cfg-panel{background:var(--bg);padding:34px 32px;display:flex;flex-direction:column}
+.cfg-panel > .hd{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:9px 13px;
+  border:1px solid var(--line-soft);color:var(--fg-2);transition:.22s;white-space:nowrap}
+.chip:hover{border-color:var(--line);color:var(--fg)}
+.chip[aria-selected="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--fg)}
+.cfg-body{margin-top:26px;padding-top:24px;border-top:1px solid var(--line-soft);flex:1}
+.cfg-body h4{font-size:19px;font-weight:600}
+.cfg-body p{font-size:14px;color:var(--fg-2);font-weight:300;margin-top:11px;min-height:4.6em}
+.cfg-body .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.cfg-body .tags span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-3);border:1px solid var(--line-soft);padding:5px 9px}
+.cfg-note{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-3);margin-top:24px;padding-top:16px;border-top:1px solid var(--line-soft)}
+@media(max-width:940px){.cfg{grid-template-columns:1fr}.cfg-stage{min-height:320px}}
+
+/* ── mission profiles ───────────────────────────────────── */
+.mp{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);
+  border:1px solid var(--line-soft);margin-top:52px}
+.mpi{background:var(--bg-2);position:relative;overflow:hidden}
+.mpi .shot{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--line-soft);
+  background:radial-gradient(ellipse 80% 90% at 50% 60%,rgba(255,107,31,.06),transparent 70%),var(--bg-3)}
+.mpi .shot::before{content:'';position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(to right,var(--line-soft) 1px,transparent 1px),
+                   linear-gradient(to bottom,var(--line-soft) 1px,transparent 1px);background-size:36px 36px}
+.mpi .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.mpi:hover .shot img{transform:scale(1.04)}
+.mpi .shot.dim img{filter:brightness(.62) saturate(.7)}
+.mpi .shot .ph{position:absolute;inset:0;display:grid;place-content:center;
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+.mpi .body{padding:26px 26px 30px}
+.mpi .n{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--accent)}
+.mpi h4{font-size:18px;font-weight:600;margin-top:11px}
+.mpi ul{list-style:none;margin-top:14px}
+.mpi li{font-size:13.5px;color:var(--fg-2);font-weight:300;padding-left:16px;position:relative;margin-top:7px}
+.mpi li::before{content:'';position:absolute;left:0;top:.66em;width:5px;height:1px;background:var(--accent)}
+@media(max-width:980px){.mp{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.mp{grid-template-columns:1fr}}
+
+/* ── spec table ─────────────────────────────────────────── */
+.spec-wrap{margin-top:48px;overflow-x:auto}
+.table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:720px}
+.table th:first-child,.table td:first-child{width:26%}
+.table th,.table td{text-align:left;padding:15px 18px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
+.table thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--fg-3);font-weight:400;border-bottom-color:var(--line)}
+.table thead th:nth-child(n+2){color:var(--fg)}
+.table td:first-child{color:var(--fg-2);font-weight:300}
+.table td:not(:first-child){font-family:var(--mono);font-size:13.5px}
+.table td .alt{color:var(--fg-3);font-size:.85em;white-space:nowrap}
+.table tbody tr:hover{background:var(--bg-2)}
+.table .grp td{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);padding-top:26px;border-bottom-color:var(--line)}
+.table col.hi{background:rgba(255,107,31,.045)}
+.table td.both{background:var(--bg-3);position:relative;color:var(--fg-2)}
+.table td.both::after{content:'COMMON';position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--fg-3);opacity:.6}
+@media(max-width:820px){.table td.both::after{display:none}}
+.tbl-note{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-3);margin-top:18px}
+.t60{margin-top:30px;max-width:860px;border:1px solid var(--line);border-left:2px solid var(--accent);
+  padding:22px 26px;display:flex;gap:22px;align-items:baseline;flex-wrap:wrap;background:var(--bg)}
+.t60 .k{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--accent);white-space:nowrap}
+.t60 span:last-child{font-size:15.5px;color:var(--fg-2);font-weight:300}
+
+/* ── engineering ────────────────────────────────────────── */
+.eng{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft);
+  border:1px solid var(--line-soft);margin-top:52px}
+.eng div{background:var(--bg-2);padding:26px 24px}
+.eng .n{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--accent)}
+.eng h4{font-size:14.5px;font-weight:600;margin-top:12px}
+.eng p{font-size:13px;color:var(--fg-2);font-weight:300;margin-top:8px}
+@media(max-width:1000px){.eng{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.eng{grid-template-columns:1fr}}
+
+/* ── contact / footer ───────────────────────────────────── */
+.contact{text-align:center}
+.contact h2{max-width:20ch;margin:18px auto 0}
+.contact .lede{margin:20px auto 0}
+.contact .actions{justify-content:center}
+.contact .eyebrow{justify-content:center}
+footer{border-top:1px solid var(--line-soft);padding-block:34px;background:var(--bg)}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+footer .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+footer nav{gap:22px} footer nav a{font-size:12px}
+
+/* ── reveal ─────────────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(22px);
+  transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}
+  .cfg-stage img{transition:none}}
+</style>
+</head>
+<body>
+
+<header id="hdr"><div class="wrap">
+  <a class="mark" href="#top" aria-label="Home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 L21 21 L12 16.5 L3 21 Z"/></svg>
+    <span>FLETCHAERO</span>
+  </a>
+  <nav>
+    <a class="hide-sm" href="#platform">Platform</a>
+    <a class="hide-sm" href="#configure">Configure</a>
+    <a class="hide-sm" href="#specs">Specifications</a>
+    <a class="nav-cta" href="#contact">Contact</a>
+  </nav>
+</div></header>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="top">
+  <div class="hero-video">
+    <video autoplay muted loop playsinline preload="metadata" poster="media/hero-poster.jpg">
+      <source src="media/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="grid-bg"></div>
+  <div class="wrap">
+    <p class="eyebrow rv">Mission Configurable Platform</p>
+    <h1 class="rv">One platform. <em>Endless missions.</em></h1>
+    <p class="lede rv">Move what ground vehicles can't. Reach where helicopters shouldn't.
+      TITAN carries up to 132 lb, operates at 20,000 feet, and is ready to fly in under two minutes.</p>
+    <div class="actions rv">
+      <a class="btn btn-primary" href="#configure">Configure TITAN</a>
+      <a class="btn btn-ghost" href="#specs">Specifications</a>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ Scroll</div>
+</section>
+
+<!-- ══ STAT STRIP ══ -->
+<div class="strip"><div class="wrap">
+  <div class="strip-item"><div class="k" data-count="132">132<small> lb</small></div><div class="v">Max Payload</div></div>
+  <div class="strip-item"><div class="k" data-count="20000">20,000<small> ft</small></div><div class="v">Operational Ceiling</div></div>
+  <div class="strip-item"><div class="k">&lt;2<small> min</small></div><div class="v">Deploy to Standby</div></div>
+  <div class="strip-item"><div class="k" data-count="200">200<small>+ L</small></div><div class="v">Cargo Volume</div></div>
+</div></div>
+
+<!-- ══ STATEMENT ══ -->
+<section class="band"><div class="wrap">
+  <p class="rv">Every additional mission normally means another aircraft, another training
+    programme, another inventory of spare parts.<b>TITAN <em>changes that.</em></b></p>
+</div></section>
+
+<!-- ══ WHY TITAN ══ -->
+<section class="sec" id="platform"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow">The Platform</p>
+    <h2>One platform. Built to adapt.</h2>
+    <p class="lede">Most heavy-lift aircraft do one job well. TITAN changes job in minutes — the payload changes, nothing else does.</p>
+  </div>
+  <div class="caps">
+    <div class="cap rv">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>
+      <h4>Mission ready</h4>
+      <p>Out of the vehicle and standing by in under two minutes. Designed for rapid deployment wherever the mission starts.</p>
+      <div class="fig">Unload to standby in under 2 minutes</div>
+    </div>
+    <div class="cap rv">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="9" width="18" height="11" rx="1"/><path d="M8 9V6a4 4 0 018 0v3M3 14h18"/></svg>
+      <h4>Payload agnostic</h4>
+      <p>Cargo. Sprayer. Winch. Medical. Sensors. Changing role takes a payload, not a purchase order.</p>
+      <div class="fig">200+ L bay · largest in class</div>
+    </div>
+    <div class="cap rv">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 20h18"/><path d="M5 20l5-13 4 7 2-3 3 9"/></svg>
+      <h4>Built for harsh environments</h4>
+      <p>20,000 feet. Dust, heat and cold. The conditions that ground other aircraft are the ones it was rated in.</p>
+      <div class="fig">20,000 ft · −20 °C to 45 °C</div>
+    </div>
+    <div class="cap rv">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v18M3 12h18"/></svg>
+      <h4>Autonomous operations</h4>
+      <p>Waypoint missions, terrain-referenced flight and layered failsafes. Operators supervise the mission rather than fly the aircraft.</p>
+      <div class="fig">Autonomous &amp; manual modes</div>
+    </div>
+    <div class="cap rv">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+      <h4>Low operating cost</h4>
+      <p>Battery powered. Minimal ground crew. Rapid turnaround between sorties. More time moving payloads, less time servicing equipment.</p>
+      <div class="fig">Four independent battery packs</div>
+    </div>
+    <div class="cap rv">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21V7"/><path d="M6 13l6-6 6 6"/><rect x="4" y="19" width="16" height="2"/></svg>
+      <h4>Heavy lift, honestly rated</h4>
+      <p>Designed to carry meaningful payloads without requiring a different aircraft.</p>
+      <div class="fig">Up to 132 lb · 40% payload fraction</div>
+    </div>
+  </div></section>
+
+<!-- ══ CONFIGURE ══ -->
+<section class="sec" id="configure" style="background:var(--bg-2);border-block:1px solid var(--line-soft)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Configure</p>
+      <h2>Your mission changes. The aircraft doesn't.</h2>
+      <p class="lede">Only what hangs underneath changes. Train an operator once and they can fly every configuration.</p>
+    </div>
+
+    <div class="cfg rv" id="cfgRoot">
+      <div class="cfg-stage">
+        <div class="cfg-prog"><i id="cfgProg"></i></div>
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <span class="corner bl"></span><span class="corner br"></span>
+        <div class="cfg-imgs"><img id="cfgA" src="media/cfg-agriculture.webp" alt="TITAN 30 in the selected configuration"><img id="cfgB" src="" alt=""></div>
+        <div class="cfg-badge">
+          <div class="lab">Configuration</div>
+          <div class="nm" id="cfgName">Agriculture</div>
+          <div class="pl" id="cfgPayload"></div>
+        </div>
+        <svg class="cfg-glyph" id="cfgGlyph" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.1" aria-hidden="true"></svg>
+      </div>
+      <div class="cfg-panel">
+        <div class="hd">Select mission</div>
+        <div class="chips" id="cfgChips" role="listbox" aria-label="Mission configurations"></div>
+        <div class="cfg-body">
+          <h4 id="cfgTitle">Agriculture</h4>
+          <p id="cfgDesc"></p>
+          <div class="apps"><span class="ah">Applications</span><ul id="cfgApps"></ul></div>
+        </div>
+        <div class="cfg-note">Payload interface is common across all configurations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SPECIFICATIONS ══ -->
+<section class="sec" id="specs" style="background:var(--bg-2);border-block:1px solid var(--line-soft)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Specifications</p>
+      <h2>Every claim above, in numbers.</h2>
+      <p class="lede">One architecture, two sizes. The only question is how much you need to move.</p>
+    </div>
+    <div class="spec-wrap rv">
+      <table class="table">
+        <colgroup><col><col><col class="hi"></colgroup>
+        <thead><tr><th>Parameter</th><th>TITAN 30</th><th>TITAN 60</th></tr></thead>
+        <tbody>
+          <tr class="grp"><td colspan="3">Performance</td></tr>
+          <tr><td>Max payload</td><td>66 lb <span class="alt">(30 kg)</span></td><td>132 lb <span class="alt">(60 kg)</span></td></tr>
+          <tr><td>Max take-off weight</td><td>198 lb <span class="alt">(90 kg)</span></td><td>331 lb <span class="alt">(150 kg)</span></td></tr>
+          <tr><td>Cruise speed</td><td class="both" colspan="2">40 mph <span class="alt">(64 km/h)</span></td></tr>
+          <tr><td>Operational ceiling</td><td class="both" colspan="2">20,000 ft</td></tr>
+          <tr><td>Range</td><td class="both" colspan="2">19 mi <span class="alt">(30 km)</span></td></tr>
+          <tr><td>Cargo volume</td><td class="both" colspan="2">7 ft³ <span class="alt">(200 L)</span></td></tr>
+          <tr class="grp"><td colspan="3">Deployment</td></tr>
+          <tr><td>Unfolded dimensions</td><td>7 × 3 × 7 ft <span class="alt">(2.1 × 0.9 × 2.1 m)</span></td><td>8 × 3 × 8 ft <span class="alt">(2.5 × 0.9 × 2.5 m)</span></td></tr>
+          <tr><td>Folded dimensions</td><td>2.3 × 2.3 × 3.9 ft <span class="alt">(0.7 × 0.7 × 1.2 m)</span></td><td>4.4 × 2.5 × 4.4 ft <span class="alt">(1.35 × 0.75 × 1.35 m)</span></td></tr>
+          <tr><td>Folded volume</td><td>21 ft³ <span class="alt">(0.6 m³)</span></td><td>48 ft³ <span class="alt">(1.37 m³)</span></td></tr>
+          <tr><td>Unload to standby</td><td class="both" colspan="2">Under 2 minutes</td></tr>
+          <tr class="grp"><td colspan="3">Environment</td></tr>
+          <tr><td>Operating temperature</td><td class="both" colspan="2">−4 to 113 °F <span class="alt">(−20 to 45 °C)</span></td></tr>
+          <tr class="grp"><td colspan="3">Systems</td></tr>
+          <tr><td>Flight modes</td><td class="both" colspan="2">Autonomous &amp; manual</td></tr>
+          <tr><td>Inertial</td><td class="both" colspan="2">Triple-redundant IMU</td></tr>
+          <tr><td>Navigation</td><td class="both" colspan="2">Dual RTK GPS</td></tr>
+          <tr><td>Heading</td><td class="both" colspan="2">Mag-field-independent estimation</td></tr>
+          <tr><td>Altimetry</td><td class="both" colspan="2">LiDAR altimeter</td></tr>
+          <tr><td>Power</td><td class="both" colspan="2">Four independent batteries</td></tr>
+          <tr><td>Airframe</td><td class="both" colspan="2">Aluminium frame · carbon arms &amp; booms</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-note rv">Rows marked common are identical across both aircraft · Range varies with payload, altitude and weather</p>
+  </div>
+</section>
+
+<!-- ══ ENGINEERING ══ -->
+<section class="sec"><div class="wrap">
+  <div class="sec-head rv">
+    <p class="eyebrow">Engineering</p>
+    <h2>Built to keep flying when something doesn't.</h2>
+    <p class="lede">At altitude with a load on, there is no margin for a single point of failure. Everything that could strand the aircraft has a second path.</p>
+  </div>
+  <div class="eng">
+    <div class="rv"><div class="n">01</div><h4>Triple-redundant IMU</h4><p>Three independent inertial units voting on attitude. A drifting sensor is outvoted, not followed.</p></div>
+    <div class="rv"><div class="n">02</div><h4>Dual RTK GPS</h4><p>Centimetre-class positioning, with a second receiver carrying the mission if the first degrades.</p></div>
+    <div class="rv"><div class="n">03</div><h4>Mag-independent heading</h4><p>Heading estimation that does not rely on the magnetic field — the failure mode that ends most heavy-lift flights near steel and high current.</p></div>
+    <div class="rv"><div class="n">04</div><h4>Four independent batteries</h4><p>Separate packs on separate paths. Losing one is a degraded sortie, not a falling aircraft.</p></div>
+    <div class="rv"><div class="n">05</div><h4>LiDAR altimetry</h4><p>True height above ground for terrain-referenced flight, low-level work and precise set-down on unprepared surfaces.</p></div>
+    <div class="rv"><div class="n">06</div><h4>Hybrid airframe construction</h4><p>Aluminium structural frame, carbon-fibre arms and carbon boom tubes — stiffness where the loads are, light weight where they are not.</p></div>
+    <div class="rv"><div class="n">07</div><h4>Protected avionics enclosure</h4><p>Rated −20 °C to 45 °C. Dust, damp and thin cold air are operating conditions, not exceptions.</p></div>
+    <div class="rv"><div class="n">08</div><h4>Rapid payload integration</h4><p>A common mechanical, power and data interface, so a new payload becomes a supported configuration rather than an engineering project.</p></div>
+  </div></section>
+
+<!-- ══ CONTACT ══ -->
+<section class="sec contact" id="contact"
+  style="background:var(--bg-2);border-top:1px solid var(--line-soft)"><div class="wrap">
+  <p class="eyebrow rv">Get in touch</p>
+  <h2 class="rv">Tell us the mission. We'll configure the platform.</h2>
+  <p class="lede rv">Send us the load, the distance and the terrain. We'll come back with a configuration and the numbers behind it.</p>
+  <div class="actions rv">
+    <a class="btn btn-primary" href="mailto:contact@unmannd.com?subject=TITAN%20platform%20enquiry">Contact the team</a>
+    <a class="btn btn-ghost" href="#configure">Back to configurator</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="meta">FletchAero</div>
+  <nav>
+    <a href="#platform">Platform</a><a href="#configure">Configure</a><a href="#specs">Specifications</a>
+  </nav>
+  <div class="meta">© 2026</div>
+</div></footer>
+
+<script>
+/* header */
+const hdr=document.getElementById('hdr');
+const onScroll=()=>hdr.classList.toggle('solid',scrollY>40);
+onScroll();addEventListener('scroll',onScroll,{passive:true});
+
+/* reveal */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const sibs=[...e.target.parentElement.querySelectorAll(':scope > .rv')];
+  e.target.style.transitionDelay=Math.min(sibs.indexOf(e.target),5)*70+'ms';
+  e.target.classList.add('in');io.unobserve(e.target);
+});},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* stat counters */
+const fmt=n=>n.toLocaleString('en-US');
+const co=new IntersectionObserver((es)=>{es.forEach(e=>{
+  if(!e.isIntersecting)return; co.unobserve(e.target);
+  const el=e.target,target=+el.dataset.count,small=el.querySelector('small').outerHTML;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){return}
+  let t0=null;const dur=1100;
+  const step=(t)=>{t0??=t;const p=Math.min((t-t0)/dur,1);
+    const v=Math.round(target*(1-Math.pow(1-p,3)));
+    el.innerHTML=fmt(v)+small; if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step);
+});},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+
+/* mission configurator — auto-cycles, pauses on hover, stops on click */
+const MISSIONS=[
+  {name:'Agriculture', payload:'Spray tank &amp; boom', img:'media/cfg-agriculture.webp',
+   glyph:'<path d="M5 5h14v7a3 3 0 01-3 3H8a3 3 0 01-3-3z"/><path d="M4 19h16M7 19v-2M12 19v-2M17 19v-2M9 5V3h6v2"/>',
+   desc:'Liquid tank and boom on the common mount. Height is held over uneven ground so the swath stays consistent across the field.',
+   apps:['Crop spraying','Seeding','Fertiliser and granular spreading','Orchard and undulating terrain']},
+  {name:'Cargo &amp; logistics', payload:'Open equipment frame &middot; 200 L', img:'media/cfg-cargo.webp',
+   glyph:'<rect x="3" y="8" width="18" height="11" rx="1"/><path d="M3 12h18M12 8v11"/>',
+   desc:'Open frame carrying cases, tooling and instruments as loaded. Nothing needs repacking to fly, and the aircraft holds the same profile full or empty.',
+   apps:['Last-mile delivery','Remote and island resupply','Industrial and mine sites','Inter-facility transfer']},
+  {name:'Disaster relief', payload:'Relief cargo module &middot; 200 L', img:'media/cfg-relief.webp',
+   glyph:'<path d="M12 3l8 4v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V7z"/><path d="M12 9v6M9 12h6"/>',
+   desc:'Sealed 200-litre module for the first loads into areas the road network has stopped serving.',
+   apps:['Food and water','Shelter and rescue equipment','Medical and trauma supplies','Access before roads reopen']},
+  {name:'Winch &amp; sling', payload:'Cable winch &amp; hook', img:'media/cfg-winch.webp',
+   glyph:'<rect x="6" y="3" width="12" height="5" rx="1"/><path d="M12 8v7"/><path d="M9 15h6l-1 5h-4z"/>',
+   desc:'Cable delivery to places the aircraft cannot land. It holds station overhead while the load goes down on the hook.',
+   apps:['Towers, masts and platforms','Vessel and offshore decks','Steep or unlandable ground','Recovery and rescue lift']},
+  {name:'Defence logistics', payload:'MIL logistics module &middot; 200 L', img:'media/cfg-defence.webp',
+   glyph:'<path d="M12 3l8 3.5v6c0 5-3.4 8-8 8.5-4.6-.5-8-3.5-8-8.5v-6z"/><path d="M9 12l2 2 4-4"/>',
+   desc:'Ruggedised 200-litre module for resupply to positions a vehicle cannot reach, without putting a crew on the route.',
+   apps:['Forward resupply','High-altitude post sustainment','Stores delivery','Sensor and ISR transport']},
+];
+const root=document.getElementById('cfgRoot'), chips=document.getElementById('cfgChips');
+const nm=document.getElementById('cfgName'), pl=document.getElementById('cfgPayload');
+const imA=document.getElementById('cfgA'), imB=document.getElementById('cfgB');
+let front=imA, back=imB;
+const gl=document.getElementById('cfgGlyph'), ti=document.getElementById('cfgTitle');
+const de=document.getElementById('cfgDesc'), ap=document.getElementById('cfgApps');
+const pr=document.getElementById('cfgProg');
+const DWELL=4800, RESUME=14000;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx=0, auto=!reduce, paused=false, t0=null, raf=null, resumeTimer=null;
+
+function paint(i){
+  const m=MISSIONS[i];
+  [...chips.children].forEach((c,j)=>c.setAttribute('aria-selected',j===i));
+  gl.classList.add('swap');
+  setTimeout(()=>{gl.innerHTML=m.glyph;gl.classList.remove('swap')},170);
+  if(front.getAttribute('src')!==m.img){
+    back.src=m.img; back.classList.add('out');
+    const show=()=>{ back.classList.remove('out'); front.classList.add('out');
+                     const t=front; front=back; back=t; };
+    back.complete ? requestAnimationFrame(()=>requestAnimationFrame(show))
+                  : back.addEventListener('load',()=>requestAnimationFrame(show),{once:true});
+  }
+  nm.innerHTML=m.name; ti.innerHTML=m.name; pl.innerHTML=m.payload; de.innerHTML=m.desc;
+  ap.innerHTML=m.apps.map(a=>`<li>${a}</li>`).join('');
+}
+function go(i,manual){
+  idx=(i+MISSIONS.length)%MISSIONS.length; paint(idx); t0=null;
+  if(manual){
+    auto=false; pr.style.width='0';
+    clearTimeout(resumeTimer);
+    resumeTimer=setTimeout(()=>{auto=true;t0=null;tick(performance.now())},RESUME);
+  }
+}
+function tick(t){
+  raf=requestAnimationFrame(tick);
+  if(!auto||paused){t0=t;return}
+  t0??=t;
+  const p=(t-t0)/DWELL;
+  pr.style.width=Math.min(p,1)*100+'%';
+  if(p>=1){t0=t; go(idx+1)}
+}
+MISSIONS.forEach((m,i)=>{
+  const b=document.createElement('button');
+  b.className='chip'; b.type='button'; b.role='option'; b.innerHTML=m.name;
+  b.addEventListener('click',()=>go(i,true));
+  chips.appendChild(b);
+});
+root.addEventListener('mouseenter',()=>{paused=true;root.classList.add('cfg-root-paused')});
+root.addEventListener('mouseleave',()=>{paused=false;root.classList.remove('cfg-root-paused')});
+paint(0);
+if(!reduce){
+  // only run the carousel while the section is on screen
+  new IntersectionObserver((es)=>es.forEach(e=>{
+    if(e.isIntersecting){ if(!raf) raf=requestAnimationFrame(tick) }
+    else if(raf){ cancelAnimationFrame(raf); raf=null; t0=null }
+  }),{threshold:.25}).observe(root);
+}
+</script>
+</body>
+</html>
