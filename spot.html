@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SPOT — Long-Endurance ISR Platform | FletchAero</title>
+<meta name="description" content="SPOT is a hybrid VTOL fixed-wing ISR platform designed for persistent observation. 220 minutes endurance. 5 kg payload. 100 km+ communications range." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090c; --bg-2:#0c0f14; --bg-3:#111620;
+  --line:rgba(255,255,255,.10); --line-soft:rgba(255,255,255,.055);
+  --fg:#eef1f5; --fg-2:#9aa4b2; --fg-3:#5f6a7a;
+  --accent:#ff6b1f; --accent-soft:rgba(255,107,31,.14);
+  --max:1220px; --pad:clamp(20px,5vw,64px);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--fg-3);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);flex:none}
+h1,h2,h3{font-weight:600;letter-spacing:-.025em;line-height:1.05}
+h1{font-size:clamp(38px,6.6vw,80px);letter-spacing:-.035em}
+h2{font-size:clamp(28px,4.2vw,50px)}
+.lede{font-size:clamp(15px,1.55vw,19px);color:var(--fg-2);font-weight:300;max-width:62ch}
+.sec{padding-block:clamp(72px,10vh,124px)}
+.band{border-bottom:1px solid var(--line-soft);background:var(--bg);position:relative;overflow:hidden}
+.band::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(900px,110%);aspect-ratio:2.2;border-radius:50%;background:radial-gradient(ellipse,var(--accent-soft) 0%,transparent 64%);filter:blur(30px);pointer-events:none}
+.band .wrap{position:relative;z-index:1;padding-block:clamp(64px,9vh,104px)}
+.band p{font-size:clamp(21px,2.9vw,36px);font-weight:300;line-height:1.28;letter-spacing:-.02em;max-width:24ch;color:var(--fg-2)}
+.band p b{font-weight:600;color:var(--fg);display:block;margin-top:.5em}
+.band p b em{font-style:normal;color:var(--accent)}
+.sec-head{max-width:68ch}.sec-head h2{margin-top:18px}.sec-head .lede{margin-top:18px}
+section{position:relative}
+header{position:fixed;inset:0 0 auto 0;z-index:100;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(7,9,12,0);border-bottom:1px solid transparent;transition:background .35s,border-color .35s}
+header.solid{background:rgba(7,9,12,.86);border-bottom-color:var(--line-soft)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.mark{display:flex;align-items:center;gap:10px}
+.mark svg{width:22px;height:22px;color:var(--accent)}
+.mark span{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--fg-2);white-space:nowrap}
+nav{display:flex;align-items:center;gap:28px}
+nav a{font-size:13px;color:var(--fg-2);position:relative;padding:4px 0;transition:color .2s}
+nav a::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);transition:width .25s}
+nav a:hover{color:var(--fg)} nav a:hover::after{width:100%}
+.nav-cta{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);padding:9px 16px;color:var(--fg);transition:.25s}
+.nav-cta:hover{border-color:var(--accent);background:var(--accent-soft)}
+.nav-cta::after{display:none}
+.nav-plat{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3)}
+.nav-plat:hover{color:var(--accent)}
+@media(max-width:900px){nav .hide-sm{display:none}}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;padding-top:100px;padding-bottom:clamp(60px,8vh,110px);overflow:hidden}
+.hero .grid-bg{position:absolute;inset:0;z-index:0;opacity:.45;background-image:linear-gradient(to right,var(--line-soft) 1px,transparent 1px),linear-gradient(to bottom,var(--line-soft) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 90% 70% at 60% 50%,#000 20%,transparent 85%);-webkit-mask-image:radial-gradient(ellipse 90% 70% at 60% 50%,#000 20%,transparent 85%)}
+.hero .glow{position:absolute;right:-6%;top:8%;width:min(75%,900px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,107,31,.09) 0%,transparent 62%);filter:blur(28px);z-index:0}
+.hero .wrap{position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(20px,4vw,72px);align-items:center}
+.hero-copy h1{max-width:14ch;margin-top:24px}
+.hero-copy h1 em{font-style:normal;color:var(--accent)}
+.hero-copy .lede{margin-top:22px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:14px 22px;border:1px solid var(--line);transition:.25s}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#0b0b0b;font-weight:500}
+.btn-primary:hover{filter:brightness(1.12)}
+.btn-ghost:hover{border-color:var(--accent);background:var(--accent-soft)}
+.hero-stage{position:relative;aspect-ratio:1.4/1;display:grid;place-items:center}
+.hero-drone{position:relative;z-index:3;width:110%;max-width:none;filter:drop-shadow(0 40px 60px rgba(0,0,0,.6));transform:translateX(4%) rotate(-3deg)}
+.terrain{position:absolute;left:50%;bottom:6%;width:120%;height:56%;transform:translateX(-50%) perspective(700px) rotateX(62deg);background:linear-gradient(rgba(255,107,31,.03),rgba(255,107,31,.02)),radial-gradient(ellipse 60% 90% at 50% 40%,rgba(255,107,31,.16),transparent 70%),repeating-linear-gradient(0deg,rgba(255,107,31,.14) 0 1px,transparent 1px 40px),repeating-linear-gradient(90deg,rgba(255,107,31,.10) 0 1px,transparent 1px 40px),#05070a;mask-image:radial-gradient(ellipse 60% 80% at 50% 30%,#000 25%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 30%,#000 25%,transparent 80%);z-index:1;pointer-events:none}
+.scan{position:absolute;left:50%;top:44%;width:34%;height:44%;transform:translateX(-50%) perspective(700px) rotateX(58deg);background:linear-gradient(180deg,rgba(255,107,31,.55) 0%,rgba(255,107,31,0) 90%);clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);filter:blur(1.5px);z-index:2;opacity:.85;pointer-events:none}
+@media(max-width:960px){.hero .wrap{grid-template-columns:1fr}.hero-stage{aspect-ratio:1.7/1;order:-1;margin-top:0}.hero-copy h1{max-width:none}}
+.strip{border-block:1px solid var(--line-soft);background:var(--bg-2)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft);padding-inline:0}
+.strip-item{background:var(--bg-2);padding:26px var(--pad);display:flex;align-items:center;gap:16px}
+.strip-item .ic{width:22px;height:22px;color:var(--accent);flex:none}
+.strip-item .txt .k{font-family:var(--mono);font-size:clamp(22px,3vw,32px);font-variant-numeric:tabular-nums}
+.strip-item .txt .k small{font-size:.5em;color:var(--fg-2)}
+.strip-item .txt .v{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3);margin-top:6px}
+@media(max-width:760px){.strip .wrap{grid-template-columns:repeat(2,1fr)}}
+.spec-block{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(24px,4vw,64px);margin-top:52px;align-items:center}
+.spec-stage{position:relative;background:var(--bg-2);border:1px solid var(--line-soft);aspect-ratio:1.35/1;overflow:hidden;padding:clamp(28px,5vw,60px)}
+.spec-stage::before{content:'';position:absolute;inset:0;opacity:.4;background-image:linear-gradient(to right,var(--line-soft) 1px,transparent 1px),linear-gradient(to bottom,var(--line-soft) 1px,transparent 1px);background-size:44px 44px}
+.spec-stage img{position:relative;z-index:2;width:100%;height:100%;object-fit:contain}
+.dim{position:absolute;font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);z-index:3;display:flex;align-items:center;gap:8px}
+.dim.top{top:14px;left:14%;right:14%;justify-content:center}
+.dim.top::before,.dim.top::after{content:'';flex:1;height:1px;border-top:1px dashed rgba(255,107,31,.55)}
+.dim.left{top:22%;bottom:22%;left:16px;flex-direction:column;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg)}
+.dim.left::before,.dim.left::after{content:'';flex:1;width:1px;border-left:1px dashed rgba(255,107,31,.55)}
+.dim.bottom-right{bottom:14px;right:6%;left:44%;justify-content:center}
+.dim.bottom-right::before,.dim.bottom-right::after{content:'';flex:1;height:1px;border-top:1px dashed rgba(255,107,31,.55)}
+.spec-cards{display:grid;gap:12px}
+.spec-cards .row{border:1px solid var(--line-soft);background:var(--bg);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:.22s}
+.spec-cards .row:hover{border-color:var(--line);background:var(--bg-3)}
+.spec-cards .row .v{font-family:var(--mono);font-size:clamp(18px,2.2vw,26px);font-variant-numeric:tabular-nums}
+.spec-cards .row .v small{font-size:.55em;color:var(--fg-2);margin-left:2px}
+.spec-cards .row .l{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3);display:flex;align-items:center;gap:10px}
+.spec-cards .row .l::before{content:'';width:12px;height:1px;background:var(--accent);flex:none}
+@media(max-width:900px){.spec-block{grid-template-columns:1fr}}
+.feat-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);margin-top:32px}
+.feat{background:var(--bg);padding:26px 30px;display:flex;gap:22px;align-items:flex-start}
+.feat .ic{width:40px;height:40px;color:var(--accent);flex:none;border:1px solid var(--line-soft);padding:8px;display:grid;place-items:center}
+.feat .h{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.feat h4{font-size:16px;font-weight:600;margin-top:8px}
+.feat p{font-size:13.5px;color:var(--fg-2);font-weight:300;margin-top:8px}
+@media(max-width:760px){.feat-row{grid-template-columns:1fr}}
+.mc{display:grid;grid-template-columns:1.2fr 1fr;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);margin-top:52px}
+.mc-vis{background:#050709;position:relative;aspect-ratio:800/560;overflow:hidden}
+.mc-topo{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.mc-vis .corner{position:absolute;width:18px;height:18px;border:1px solid var(--accent);opacity:.6;z-index:6;pointer-events:none}
+.mc-vis .corner.tl{top:14px;left:14px;border-right:0;border-bottom:0}
+.mc-vis .corner.tr{top:14px;right:14px;border-left:0;border-bottom:0}
+.mc-vis .corner.bl{bottom:14px;left:14px;border-right:0;border-top:0}
+.mc-vis .corner.br{bottom:14px;right:14px;border-left:0;border-top:0}
+.mc-hd{position:absolute;top:26px;left:26px;z-index:5;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);line-height:1.6}
+.mc-hd .lab{opacity:.7}
+.mc-hd .k{color:var(--accent);display:block;margin-top:4px;font-size:12px;letter-spacing:.16em}
+.mc-hd .g{color:var(--fg-3);display:block;margin-top:2px;font-size:10px;opacity:.75}
+.mc-drone{position:absolute;top:9%;left:6%;width:46%;z-index:4;filter:drop-shadow(0 30px 44px rgba(0,0,0,.75));transform:rotate(-4deg)}
+.wp{position:absolute;z-index:5;font-family:var(--mono);pointer-events:none;transform:translate(-50%,-100%);padding-bottom:14px}
+.wp::after{content:'';position:absolute;left:50%;bottom:0;width:1px;height:12px;background:rgba(255,107,31,.6);transform:translateX(-50%)}
+.wp .wp-l{color:var(--accent);font-size:10px;letter-spacing:.18em;text-transform:uppercase;line-height:1.2}
+.wp .wp-v{color:var(--fg-2);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-top:3px;line-height:1.35;white-space:nowrap}
+.wp.right{transform:translate(-100%,-100%)}
+.wp.right::after{left:auto;right:0;transform:none}
+.wp-launch{left:8%;top:83%;transform:translate(0,0);padding-bottom:0}
+.wp-launch::after{display:none}
+.wp-launch .wp-l{color:var(--accent);font-size:11px}
+.mc-scale{position:absolute;left:26px;bottom:26px;z-index:5;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--fg-3);text-transform:uppercase}
+.mc-scale svg{display:block;margin-bottom:4px}
+.mc-stats{position:absolute;right:22px;bottom:22px;z-index:5;background:rgba(7,9,12,.78);border:1px solid var(--line-soft);padding:16px 20px;backdrop-filter:blur(6px);display:grid;gap:10px;min-width:210px}
+.mc-stats .row{display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em}
+.mc-stats .row .l{color:var(--fg-3);letter-spacing:.18em;text-transform:uppercase;font-size:10px;display:flex;align-items:center;gap:8px}
+.mc-stats .row .l::before{content:'';width:8px;height:1px;background:var(--accent)}
+.mc-stats .row .v{color:var(--fg)}
+.mc-panel{background:var(--bg);padding:32px 30px;display:flex;flex-direction:column}
+.mc-panel > .hd{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+.mc-panel h3{font-size:clamp(26px,3.4vw,40px);font-weight:600;letter-spacing:-.02em;margin-top:14px;line-height:1.1}
+.mc-panel h3 em{font-style:normal;color:var(--accent)}
+.mc-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.mc-chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:9px 13px;border:1px solid var(--line-soft);color:var(--fg-2);transition:.22s;white-space:nowrap;text-transform:uppercase}
+.mc-chip:hover{border-color:var(--line);color:var(--fg)}
+.mc-chip[aria-selected="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--fg)}
+.mc-fields{margin-top:22px;display:grid;gap:10px}
+.mc-field{border:1px solid var(--line-soft);background:var(--bg-2);padding:14px 18px;display:grid;grid-template-columns:26px 1fr;gap:14px;align-items:center}
+.mc-field .ic{width:22px;height:22px;color:var(--accent)}
+.mc-field .txt .l{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3)}
+.mc-field .txt .v{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--fg);margin-top:4px}
+.mc-tbd{padding:22px 18px;border:1px dashed var(--line-soft);background:var(--bg-2);color:var(--fg-3);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-align:center;margin-top:22px}
+.mc-cta{margin-top:26px}.mc-cta .btn{width:100%;justify-content:center}
+.mc-note{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);display:flex;align-items:center;gap:8px;justify-content:center}
+.mc-note svg{width:14px;height:14px;color:var(--accent)}
+@media(max-width:900px){.mc{grid-template-columns:1fr}.mc-vis{min-height:360px}}
+.contact{text-align:center}
+.contact h2{max-width:22ch;margin:18px auto 0}
+.contact .lede{margin:20px auto 0}
+.contact .actions{justify-content:center}
+.contact .eyebrow{justify-content:center}
+footer{border-top:1px solid var(--line-soft);padding-block:34px;background:var(--bg)}
+footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+footer .meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+footer nav{gap:22px} footer nav a{font-size:12px}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header id="hdr"><div class="wrap">
+  <a class="mark" href="index.html" aria-label="FletchAero home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 L21 21 L12 16.5 L3 21 Z"/></svg>
+    <span>FLETCHAERO</span>
+  </a>
+  <nav>
+    <a class="hide-sm nav-plat" href="index.html">TITAN</a>
+    <a class="hide-sm" href="#platform">Platform</a>
+    <a class="hide-sm" href="#configure">Configure</a>
+    <a class="hide-sm" href="#specs">Specifications</a>
+    <a class="nav-cta" href="#contact">Contact</a>
+  </nav>
+</div></header>
+<section class="hero" id="top">
+  <div class="grid-bg"></div><div class="glow"></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow rv">Long-Endurance ISR Platform</p>
+      <h1 class="rv">Stay airborne.<br><em>See further.</em></h1>
+      <p class="lede rv">SPOT is a hybrid VTOL fixed-wing ISR platform designed for persistent observation. 220 minutes endurance. 5 kg payload. 100 km+ communications range.</p>
+      <div class="actions rv">
+        <a class="btn btn-primary" href="#configure">Explore SPOT</a>
+        <a class="btn btn-ghost" href="#specs">Specifications</a>
+      </div>
+    </div>
+    <div class="hero-stage rv" id="platform">
+      <div class="terrain"></div><div class="scan"></div>
+      <img class="hero-drone" src="media/spot-drone.svg" alt="SPOT hybrid VTOL fixed-wing drone">
+    </div>
+  </div>
+</section>
+<div class="strip"><div class="wrap">
+  <div class="strip-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div class="txt"><div class="k">220<small> min</small></div><div class="v">Endurance</div></div></div>
+  <div class="strip-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 7l2-3h10l2 3M5 7v13h14V7M5 7h14"/></svg><div class="txt"><div class="k">5<small> kg</small></div><div class="v">Payload</div></div></div>
+  <div class="strip-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 20h18M6 20l6-14 6 14"/></svg><div class="txt"><div class="k">20,000<small> ft</small></div><div class="v">Ceiling</div></div></div>
+  <div class="strip-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="18" r="1.6"/><path d="M8 15a6 6 0 018 0M5 12a10 10 0 0114 0M2 9a14 14 0 0120 0"/></svg><div class="txt"><div class="k">100<small> km+</small></div><div class="v">Comms</div></div></div>
+</div></div>
+<section class="band"><div class="wrap"><p class="rv">Persistent observation means the aircraft is over the target when the target moves, not fifteen minutes later.<b>SPOT <em>stays on station.</em></b></p></div></section>
+<section class="sec" id="specs" style="background:var(--bg-2);border-block:1px solid var(--line-soft)"><div class="wrap">
+  <div class="sec-head rv"><p class="eyebrow">SPOT / Technical Specifications</p><h2>Designed for <em style="font-style:normal;color:var(--accent)">persistence.</em></h2></div>
+  <div class="spec-block">
+    <div class="spec-stage rv">
+      <span class="dim top">6 m span</span>
+      <span class="dim left">0.7 m height</span>
+      <span class="dim bottom-right">4 m length</span>
+      <img src="media/spot-drone.svg" alt="SPOT airframe with dimensions">
+    </div>
+    <div class="spec-cards rv">
+      <div class="row"><div class="v">220<small>min</small></div><div class="l">Endurance</div></div>
+      <div class="row"><div class="v">5<small>kg</small></div><div class="l">Max Payload</div></div>
+      <div class="row"><div class="v">20,000<small>ft</small></div><div class="l">Operational Ceiling</div></div>
+      <div class="row"><div class="v">150<small>km</small></div><div class="l">Range</div></div>
+      <div class="row"><div class="v">&lt;50<small>kg</small></div><div class="l">MTOW</div></div>
+      <div class="row"><div class="v" style="font-size:clamp(15px,1.6vw,20px)">&minus;30 &deg;C to 65 &deg;C</div><div class="l">Operating Temperature</div></div>
+    </div>
+  </div>
+  <div class="feat-row rv">
+    <div class="feat">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="7" width="14" height="10" rx="1"/><path d="M17 10h4v4h-4M7 7V4h6v3M6 20v-3M14 20v-3"/></svg></div>
+      <div><div class="h">Hybrid Propulsion</div><h4>61 cc 2-cylinder gasoline engine</h4><p>25 L fuel capacity. Fuel-burn endurance without the launch and recovery burden of a runway aircraft.</p></div>
+    </div>
+    <div class="feat">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l8 3.5v6c0 5-3.4 8-8 8.5-4.6-.5-8-3.5-8-8.5v-6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div><div class="h">System Redundancies</div><h4>Triple IMU / dual RTK GPS</h4><p>5-minute battery back-up on the avionics rail. Loss of the primary GPS or IMU is a degraded sortie, not an ended one.</p></div>
+    </div>
+  </div>
+</div></section>
+<section class="sec" id="configure"><div class="wrap">
+  <div class="mc rv" id="mcRoot">
+    <div class="mc-vis">
+      <svg class="mc-topo" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <pattern id="mcGridPattern" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0 L0 0 L0 40" stroke="rgba(255,255,255,.045)" fill="none"/></pattern>
+          <pattern id="mcHatchPattern" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="rgba(255,107,31,.16)" stroke-width="1"/></pattern>
+        </defs>
+        <rect width="800" height="560" fill="url(#mcGridPattern)"/>
+        <path d="M85 495 L225 385 L405 345 L585 245 L685 125 L735 205 L605 305 L425 385 L245 425 L105 515 Z" fill="url(#mcHatchPattern)" opacity=".65"/>
+        <path d="M85 495 L225 385 L405 345 L585 245 L685 125" fill="none" stroke="rgba(255,107,31,.9)" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <g fill="#ff6b1f"><circle cx="85" cy="495" r="5.5"/><circle cx="225" cy="385" r="4.5"/><circle cx="405" cy="345" r="4.5"/><circle cx="585" cy="245" r="4.5"/><circle cx="685" cy="125" r="4.5"/></g>
+        <g fill="none" stroke="rgba(255,107,31,.35)" stroke-width="1"><circle cx="85" cy="495" r="10"/><circle cx="225" cy="385" r="9"/><circle cx="405" cy="345" r="9"/><circle cx="585" cy="245" r="9"/><circle cx="685" cy="125" r="9"/></g>
+      </svg>
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="mc-hd"><span class="lab">Mission plan</span><span class="k" id="mcMissionLabel">Long-endurance ISR</span><span class="g">Grid &middot; 34T LM 12345 67890</span></div>
+      <img class="mc-drone" src="media/spot-drone.svg" alt="SPOT on mission">
+      <div class="wp wp-launch" style="left:6%;top:83%"><div class="wp-l">Launch</div><div class="wp-v">34T LM 12020 66000<br>ALT 0 M AGL</div></div>
+      <div class="wp" style="left:28.1%;top:68.7%"><div class="wp-l">WP 01</div><div class="wp-v">ALT 2000 FT<br>SPD 85 KT</div></div>
+      <div class="wp" style="left:50.6%;top:61.6%"><div class="wp-l">WP 02</div><div class="wp-v">ALT 2000 FT<br>SPD 85 KT</div></div>
+      <div class="wp" style="left:73.1%;top:43.7%"><div class="wp-l">WP 03</div><div class="wp-v">ALT 2000 FT<br>SPD 85 KT</div></div>
+      <div class="wp right" style="left:85.6%;top:22.3%"><div class="wp-l">WP 04</div><div class="wp-v">ALT 2000 FT<br>SPD 85 KT</div></div>
+      <div class="mc-scale"><svg width="150" height="8" viewBox="0 0 150 8"><line x1="1" y1="4" x2="149" y2="4" stroke="rgba(230,235,245,.4)" stroke-width="1"/><line x1="1" y1="1" x2="1" y2="7" stroke="rgba(230,235,245,.4)" stroke-width="1"/><line x1="75" y1="2" x2="75" y2="6" stroke="rgba(230,235,245,.4)" stroke-width="1"/><line x1="149" y1="1" x2="149" y2="7" stroke="rgba(230,235,245,.4)" stroke-width="1"/></svg>0 &middot; 5 km &middot; 10 km</div>
+      <div class="mc-stats"><div class="row"><span class="l">Endurance</span><span class="v">220 min</span></div><div class="row"><span class="l">Range</span><span class="v">150 km+</span></div><div class="row"><span class="l">Ceiling</span><span class="v">20,000 ft</span></div><div class="row"><span class="l">Payload</span><span class="v">5 kg</span></div></div>
+    </div>
+    <div class="mc-panel">
+      <div class="hd">Mission configuration</div>
+      <h3>Built around the <em>mission.</em></h3>
+      <div class="mc-chips" role="tablist" id="mcChips">
+        <button class="mc-chip" role="tab" aria-selected="true" data-mission="isr">Long-endurance ISR</button>
+        <button class="mc-chip" role="tab" aria-selected="false" data-mission="survey">Area survey</button>
+        <button class="mc-chip" role="tab" aria-selected="false" data-mission="corridor">Corridor patrol</button>
+        <button class="mc-chip" role="tab" aria-selected="false" data-mission="emergency">Emergency response</button>
+      </div>
+      <div id="mcISR" class="mc-fields">
+        <div class="mc-field"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="7" width="18" height="12" rx="1"/><circle cx="12" cy="13" r="3.5"/><path d="M9 7l1.5-2h3L15 7"/></svg><div class="txt"><div class="l">Payload</div><div class="v">Day / night EO-IR gimbal</div></div></div>
+        <div class="mc-field"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 12l8-2 2-8 2 8 8 2-8 2-2 8-2-8z"/></svg><div class="txt"><div class="l">Flight mode</div><div class="v">Autonomous + manual</div></div></div>
+        <div class="mc-field"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="16" r="1.6"/><path d="M8 13a6 6 0 018 0M5 10a10 10 0 0114 0"/></svg><div class="txt"><div class="l">Comms</div><div class="v">256-bit encrypted</div></div></div>
+        <div class="mc-field"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="4" width="16" height="16"/><path d="M4 10h16M4 16h16M10 4v16M16 4v16"/></svg><div class="txt"><div class="l">Launch area</div><div class="v">15 m &times; 15 m</div></div></div>
+      </div>
+      <div id="mcTBD" class="mc-tbd" hidden>Profile available on request &mdash; configuration details supplied at enquiry.</div>
+      <div class="mc-cta"><a class="btn btn-primary" href="#contact">Configure SPOT <span aria-hidden="true">&rarr;</span></a></div>
+      <div class="mc-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Mission-ready in less than 1 hour</div>
+    </div>
+  </div>
+</div></section>
+<section class="sec contact" id="contact" style="background:var(--bg-2);border-top:1px solid var(--line-soft)"><div class="wrap">
+  <p class="eyebrow rv">Get in touch</p>
+  <h2 class="rv">Tell us the mission. We'll configure the platform.</h2>
+  <p class="lede rv">Send us the area, the on-station time and the sensor. We'll come back with a configuration and the numbers behind it.</p>
+  <div class="actions rv"><a class="btn btn-primary" href="mailto:contact@unmannd.com?subject=SPOT%20platform%20enquiry">Contact the team</a><a class="btn btn-ghost" href="index.html">Explore TITAN</a></div>
+</div></section>
+<footer><div class="wrap"><div class="meta">FletchAero</div><nav><a href="index.html">TITAN</a><a href="#platform">SPOT</a><a href="#specs">Specifications</a></nav><div class="meta">&copy; 2026</div></div></footer>
+<script>
+const hdr=document.getElementById('hdr');
+const onScroll=()=>hdr.classList.toggle('solid',scrollY>40);
+onScroll();addEventListener('scroll',onScroll,{passive:true});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return;const sibs=[...e.target.parentElement.querySelectorAll(':scope > .rv')];e.target.style.transitionDelay=Math.min(sibs.indexOf(e.target),5)*70+'ms';e.target.classList.add('in');io.unobserve(e.target);});},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const chips=document.querySelectorAll('#mcChips .mc-chip');
+const isr=document.getElementById('mcISR');
+const tbd=document.getElementById('mcTBD');
+const label=document.getElementById('mcMissionLabel');
+const NAMES={isr:'Long-endurance ISR',survey:'Area survey',corridor:'Corridor patrol',emergency:'Emergency response'};
+chips.forEach(c=>c.addEventListener('click',()=>{chips.forEach(x=>x.setAttribute('aria-selected',x===c));const k=c.dataset.mission;label.textContent=NAMES[k];if(k==='isr'){isr.hidden=false;tbd.hidden=true}else{isr.hidden=true;tbd.hidden=false}}));
+</script>
+</body>
+</html>
