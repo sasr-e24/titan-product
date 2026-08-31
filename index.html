@@ -25,6 +25,13 @@ img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--pad)}
+/* preloader */
+#preload{position:fixed;inset:0;z-index:9999;background:var(--bg);display:grid;place-items:center;transition:opacity .38s cubic-bezier(.4,0,.2,1)}
+#preload svg{width:60px;height:60px;color:var(--accent);display:block}
+#preload path{stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;animation:pDraw .55s cubic-bezier(.4,.6,.2,1) forwards}
+@keyframes pDraw{to{stroke-dashoffset:0}}
+body.preloaded #preload{opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){#preload{transition:none}#preload path{animation:none;stroke-dashoffset:0}}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--fg-3);display:flex;align-items:center;gap:12px}
 .eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);flex:none}
 h1,h2,h3{font-weight:600;letter-spacing:-.025em;line-height:1.05}
@@ -188,16 +195,18 @@ footer nav{gap:22px} footer nav a{font-size:12px}
 </head>
 <body>
 
+<div id="preload" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 L21 21 L12 16.5 L3 21 Z" pathLength="100"/></svg></div>
+
 <header id="hdr"><div class="wrap">
   <a class="mark" href="#top" aria-label="Home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2 L21 21 L12 16.5 L3 21 Z"/></svg>
     <span>FLETCHAERO</span>
   </a>
   <nav>
-    <a class="hide-sm nav-plat" href="spot.html">SPOT</a>
     <a class="hide-sm" href="#platform">Platform</a>
     <a class="hide-sm" href="#configure">Configure</a>
     <a class="hide-sm" href="#specs">Specifications</a>
+    <a class="hide-sm nav-plat" href="spot.html">SPOT</a>
     <a class="nav-cta" href="#contact">Contact</a>
   </nav>
 </div></header>
@@ -349,16 +358,26 @@ footer nav{gap:22px} footer nav a{font-size:12px}
   <p class="eyebrow rv">Get in touch</p>
   <h2 class="rv">Tell us the mission. We'll configure the platform.</h2>
   <p class="lede rv">Send us the load, the distance and the terrain. We'll come back with a configuration and the numbers behind it.</p>
-  <div class="actions rv"><a class="btn btn-primary" href="mailto:contact@unmannd.com?subject=TITAN%20platform%20enquiry">Contact the team</a><a class="btn btn-ghost" href="#configure">Back to configurator</a></div>
+  <div class="actions rv"><a class="btn btn-primary" href="mailto:contact@unmannd.com?subject=FletchAero%20enquiry">Contact the team</a><a class="btn btn-ghost" href="#configure">Back to configurator</a></div>
 </div></section>
 
 <footer><div class="wrap">
   <div class="meta">FletchAero</div>
-  <nav><a href="spot.html">SPOT</a><a href="#platform">Platform</a><a href="#configure">Configure</a><a href="#specs">Specifications</a></nav>
+  <nav><a href="#platform">Platform</a><a href="#configure">Configure</a><a href="#specs">Specifications</a><a href="spot.html">SPOT</a></nav>
   <div class="meta">&copy; 2026</div>
 </div></footer>
 
 <script>
+// Preloader
+(function(){
+  const finish=()=>{
+    setTimeout(()=>document.body.classList.add('preloaded'),650);
+    setTimeout(()=>{const p=document.getElementById('preload');if(p)p.remove()},1050);
+  };
+  if(document.readyState==='complete'||document.readyState==='interactive'){finish()}
+  else{document.addEventListener('DOMContentLoaded',finish,{once:true})}
+})();
+
 const hdr=document.getElementById('hdr');
 const onScroll=()=>hdr.classList.toggle('solid',scrollY>40);
 onScroll();addEventListener('scroll',onScroll,{passive:true});
