@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>SPOT — Long-Endurance ISR Platform | FletchAero</title>
 <meta name="description" content="SPOT is a hybrid VTOL fixed-wing ISR platform designed for persistent observation. 220 minutes endurance. 5 kg payload. 100 km+ communications range." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -185,7 +186,7 @@ footer nav a{font-size:12px}
     <span>FLETCHAERO</span>
   </a>
   <nav>
-    <a class="hide-sm" href="#platform">Platform</a>
+    <a class="hide-sm" href="#platform">SPOT</a>
     <a class="hide-sm" href="#configure">Configure</a>
     <a class="hide-sm" href="#specs">Specifications</a>
     <a class="hide-sm nav-plat" href="index.html">TITAN</a>
@@ -306,7 +307,7 @@ footer nav a{font-size:12px}
 <footer><div class="wrap">
   <div class="meta">FletchAero</div>
   <nav>
-    <a href="#platform">Platform</a>
+    <a href="#platform">SPOT</a>
     <a href="#configure">Configure</a>
     <a href="#specs">Specifications</a>
     <a href="index.html">TITAN</a>
@@ -334,7 +335,6 @@ onScroll();addEventListener('scroll',onScroll,{passive:true});
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return;const sibs=[...e.target.parentElement.querySelectorAll(':scope > .rv')];e.target.style.transitionDelay=Math.min(sibs.indexOf(e.target),5)*70+'ms';e.target.classList.add('in');io.unobserve(e.target);});},{rootMargin:'0px 0px -8% 0px',threshold:.08});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-// Obfuscated mailto: assemble on click, keeps address out of static HTML for scrapers
 (function(){
   const b=document.getElementById('contactBtn');
   if(!b) return;
