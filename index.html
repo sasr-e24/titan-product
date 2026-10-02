@@ -175,8 +175,8 @@ footer nav a{font-size:12px}
 .rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.cfg-stage img{transition:none}}
-.spot-teaser{background:var(--bg);border-block:1px solid var(--line-soft);overflow:hidden;position:relative}
-.spot-teaser::before{content:'';position:absolute;right:-8%;top:50%;transform:translateY(-50%);width:min(60%,760px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,107,31,.10) 0%,transparent 65%);filter:blur(30px);pointer-events:none}
+.isr-teaser{background:var(--bg);border-block:1px solid var(--line-soft);overflow:hidden;position:relative}
+.isr-teaser::before{content:'';position:absolute;right:-8%;top:50%;transform:translateY(-50%);width:min(60%,760px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,107,31,.10) 0%,transparent 65%);filter:blur(30px);pointer-events:none}
 .teaser{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(24px,4vw,60px);align-items:center;position:relative;z-index:1}
 .teaser-copy{max-width:52ch}
 .teaser-copy h2 em{font-style:normal;color:var(--accent)}
@@ -211,7 +211,7 @@ footer nav a{font-size:12px}
     <a class="hide-sm" href="#platform">KingCobra</a>
     <a class="hide-sm" href="#configure">Configure</a>
     <a class="hide-sm" href="#specs">Specifications</a>
-    <a class="hide-sm nav-plat" href="spot.html">Endurance ISR</a>
+    <a class="hide-sm nav-plat" href="endurance-isr.html">Endurance ISR</a>
     <a class="nav-cta" href="#contact">Contact</a>
   </nav>
 </div></header>
@@ -337,7 +337,7 @@ footer nav a{font-size:12px}
     <div class="rv"><div class="n">08</div><h4>Rapid payload integration</h4><p>A common mechanical, power and data interface, so a new payload becomes a supported configuration rather than an engineering project.</p></div>
   </div></section>
 
-<section class="sec spot-teaser"><div class="wrap">
+<section class="sec isr-teaser"><div class="wrap">
   <div class="teaser">
     <div class="teaser-copy">
       <p class="eyebrow rv">Also from FletchAero</p>
@@ -349,7 +349,7 @@ footer nav a{font-size:12px}
         <div><div class="k">20K<small> ft</small></div><div class="v">Ceiling</div></div>
         <div><div class="k">100<small>+ km</small></div><div class="v">Comms</div></div>
       </div>
-      <div class="actions rv"><a class="btn btn-primary" href="spot.html">Explore Endurance ISR &rarr;</a></div>
+      <div class="actions rv"><a class="btn btn-primary" href="endurance-isr.html">Explore Endurance ISR &rarr;</a></div>
     </div>
     <div class="teaser-media rv">
       <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
@@ -372,7 +372,7 @@ footer nav a{font-size:12px}
     <a href="#platform">KingCobra</a>
     <a href="#configure">Configure</a>
     <a href="#specs">Specifications</a>
-    <a href="spot.html">Endurance ISR</a>
+    <a href="endurance-isr.html">Endurance ISR</a>
     <a href="privacy.html">Privacy</a>
     <a href="terms.html">Terms</a>
   </nav>
