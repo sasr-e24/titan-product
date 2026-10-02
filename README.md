@@ -1,6 +1,6 @@
-# TITAN — platform microsite
+# KingCobra — platform microsite
 
-Single-page site for the TITAN heavy-lift UAV platform.
+Single-page site for the KingCobra heavy-lift UAV platform.
 Static HTML, no build step. Open `index.html` or serve the folder.
 
     index.html      whole site — markup, styles and scripts inline
